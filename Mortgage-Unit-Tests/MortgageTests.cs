@@ -8,7 +8,7 @@ namespace Mortgage_Unit_Tests
     public class MortgageTests
     {
         [TestMethod]
-        public void Test_Power_Method()
+        public void Test_Power_Method_with_Double()
         {
             Random rnd = new Random();
 
@@ -22,6 +22,12 @@ namespace Mortgage_Unit_Tests
                 Assert.AreEqual(Math.Pow(b, n), res);
             }
 
+        }
+
+        [TestMethod] public void Test_Power_Method_with_Integers()
+        {
+            Random rnd = new Random();
+
             for (int i = 0; i < 100; i++)
             {
                 double b = rnd.Next();
@@ -31,7 +37,6 @@ namespace Mortgage_Unit_Tests
 
                 Assert.AreEqual(Math.Pow(b, n), res);
             }
-
         }
 
         [TestMethod]
