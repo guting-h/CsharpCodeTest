@@ -6,13 +6,15 @@ namespace CodeTestLocal
 {
     internal class Program
     {
+
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome!");
-            Console.WriteLine("Type 'read' to read data from file, Type 'write' for calculation from new inputs");
+            Console.WriteLine("[1] Read data from file");
+            Console.WriteLine("[2] Enter new inputs");
             
             string option = Console.ReadLine();
-            if (option == "read")
+            if (option == "1")
             {
                 Console.WriteLine("Please enter the name of the file you want to read: ");
                 string file = Console.ReadLine();
@@ -39,18 +41,18 @@ namespace CodeTestLocal
                     {
                         //Note that the decimal separator must be '.'
                         string row = reader.ReadLine();
-                        string[] customers = Regex.Split(row, ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+                        string[] customers = InputConverter.ConvertInput(row);
 
                         // check that the read line is not empty
-                        if (customers.Length > 1)
+                        if (customers.Length == 4)
                         {
                             string name = customers[0];
                             double loan = Convert.ToDouble(customers[1]);
                             double nYears = Convert.ToDouble(customers[3]);
-                            double interest = (Convert.ToDouble(customers[2]) / 100) / 12;
-                            double amount = Mortgage.monthlyPay(loan, nYears * 12, interest);
+                            double interest = Convert.ToDouble(customers[2]);
+                            double amount = Mortgage.monthlyPay(loan, nYears, interest);
 
-                            Console.WriteLine($"prospect {counter}: {name} wants to borrow {loan} Euro for a period of {nYears} years and pay {Math.Round(amount, 2)} Euro each month.");
+                            Console.WriteLine($"prospect {counter}: {name} wants to borrow {loan} Euro for a period of {nYears} years and pay {amount} Euro each month.");
                             counter++;
                         }
                     }
@@ -63,7 +65,7 @@ namespace CodeTestLocal
                 {
                     reader.Close();
                 }
-            } else if (option == "write")
+            } else if (option == "2")
             {
                 Console.WriteLine("Customer name: ");
                 string name = Console.ReadLine();
@@ -72,14 +74,21 @@ namespace CodeTestLocal
                 Console.WriteLine("Number of years: ");
                 double nYears = Convert.ToDouble(Console.ReadLine());
                 Console.WriteLine("Interest rate (e.g. 6% yearly => enter '6'): ");
-                double interest = (Convert.ToDouble(Console.ReadLine()) / 100) /12;
+                double interest = Convert.ToDouble(Console.ReadLine());
 
-                double amount = Mortgage.monthlyPay(loan, nYears * 12, interest);
+                try
+                {
+                    double amount = Mortgage.monthlyPay(loan, nYears, interest);
 
-                Console.WriteLine($"{name} wants to borrow {loan} Euro for a period of {nYears} years and pay {Math.Round(amount, 2)} Euro each month.");
+                    Console.WriteLine($"{name} wants to borrow {loan} Eurofor a period of {nYears} years and pay {amount} Euro each month.");
+                } catch(ArgumentOutOfRangeException)
+                {
+                    Console.WriteLine("Inputs cannot be negative");
+                }
+                
             } else
             {
-                Console.WriteLine("Unknown command, exiting ...");
+                Console.WriteLine("Unknown option.");
                 Console.WriteLine("Have a nice day!");
             }
         }
