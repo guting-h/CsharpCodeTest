@@ -5,6 +5,9 @@ namespace CodeTestLocal
     public class Mortgage
     {
 
+        /** given a loan and fixed yearly interest rate, calcuate the amount a customer pays each month in order
+         * to pay off the loan in "years" years.
+        **/
         public static double monthlyPay(double loan, double years, double interest)
         {
             if (loan < 0 || years < 0 || interest < 0)
@@ -22,6 +25,7 @@ namespace CodeTestLocal
             return Math.Round(res, 2); 
         }
 
+        // Calculates x to the nth power
         public static double power(double x, double n)
         {
             if (n == 0)
