@@ -67,23 +67,25 @@ namespace CodeTestLocal
                 }
             } else if (option == "2")
             {
-                Console.WriteLine("Customer name: ");
-                string name = Console.ReadLine();
-                Console.WriteLine("Total loan (Euro): ");
-                double loan = Convert.ToDouble(Console.ReadLine());
-                Console.WriteLine("Number of years: ");
-                double nYears = Convert.ToDouble(Console.ReadLine());
-                Console.WriteLine("Interest rate (e.g. 6% yearly => enter '6'): ");
-                double interest = Convert.ToDouble(Console.ReadLine());
-
                 try
                 {
+                    Console.WriteLine("Customer name: ");
+                    string name = Console.ReadLine();
+                    Console.WriteLine("Total loan (Euro): ");
+                    double loan = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine("Number of years: ");
+                    double nYears = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine("Interest rate (e.g. 6% yearly => enter '6'): ");
+                    double interest = Convert.ToDouble(Console.ReadLine());
+                
                     double amount = Mortgage.monthlyPay(loan, nYears, interest);
 
                     Console.WriteLine($"{name} wants to borrow {loan} Eurofor a period of {nYears} years and pay {amount} Euro each month.");
-                } catch(ArgumentOutOfRangeException)
+                } catch(Exception ex)
                 {
-                    Console.WriteLine("Inputs cannot be negative");
+                    Console.WriteLine("Please check your inputs.");
+                    Console.WriteLine("- Inputs must not be negative.");
+                    Console.WriteLine("- Total loan, number of years, and interest must be numbers");
                 }
                 
             } else
